@@ -1,0 +1,29 @@
+# --- Flask Core & Extensions ---
+Flask==2.2.3
+Flask-SQLAlchemy==3.0.3
+Flask-Migrate==4.0.4
+Flask-Login==0.6.2
+bootstrap-flask==2.3.0  # <--- السطر الصحيح هنا
+Flask-WTF==1.1.1
+python-dotenv==1.0.0
+
+# --- Password Hashing ---
+Werkzeug==2.2.3
+
+# --- API Interaction & Data ---
+requests==2.28.2
+PyJWT==2.6.0
+
+# --- AI & Integrations (Termux Compatible) ---
+pydantic==1.10.8
+openai==0.28.1
+# shopify==12.1.0 # معطل بسبب مشاكل التوافق
+twilio==8.9.0
+
+# --- Background Tasks ---
+celery==5.3.6
+redis==5.0.1
+
+# --- Development & Testing ---
+gunicorn==20.1.0
+pytest==7.4.3

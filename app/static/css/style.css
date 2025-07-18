@@ -1,0 +1,88 @@
+/* Custom styles for the AutoFlow Pro dashboard */
+@import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap');
+
+body {
+    font-family: 'Tajawal', sans-serif;
+    background-color: #f8f9fa; /* لون خلفية رمادي فاتح */
+}
+
+/* Sidebar styles */
+#wrapper {
+    overflow-x: hidden;
+}
+
+#sidebar-wrapper {
+    min-height: 100vh;
+    margin-right: -17rem; /* Use margin-right for RTL */
+    transition: margin 0.25s ease-out;
+    background-color: #212529; /* لون أغمق قليلاً */
+}
+
+#sidebar-wrapper .sidebar-heading {
+    padding: 1rem 1.25rem;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #fff;
+}
+
+#sidebar-wrapper .list-group-item {
+    border-right: 3px solid transparent; /* For active state indicator */
+    color: #adb5bd;
+}
+
+#sidebar-wrapper .list-group-item:hover,
+#sidebar-wrapper .list-group-item:focus {
+    color: #fff;
+    background-color: #343a40;
+}
+
+#sidebar-wrapper .list-group-item.active {
+    color: #fff;
+    background-color: #0d6efd;
+    border-right-color: #fff; /* Active indicator */
+}
+
+/* Page Content styles */
+#page-content-wrapper {
+    min-width: 100vw;
+}
+
+body.sb-sidenav-toggled #wrapper #sidebar-wrapper {
+    margin-right: 0;
+}
+
+@media (min-width: 992px) {
+    #sidebar-wrapper {
+        margin-right: 0;
+    }
+
+    #page-content-wrapper {
+        min-width: 0;
+        width: 100%;
+    }
+
+    body.sb-sidenav-toggled #wrapper #sidebar-wrapper {
+        margin-right: -17rem;
+    }
+}
+
+/* Custom card styles */
+.card {
+    border: none;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+}
+
+/* Auth pages specific styles */
+.auth-wrapper {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #e9ecef;
+}
+
+.auth-card {
+    width: 100%;
+    max-width: 420px;
+    padding: 30px;
+}

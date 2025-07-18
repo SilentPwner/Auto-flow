@@ -1,0 +1,32 @@
+{% extends "layouts/base.html" %}
+
+{% block content %}
+<h1 class="h2 mb-4">إدارة المستخدمين</h1>
+<div class="card">
+    <div class="card-body">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>اسم المستخدم</th>
+                    <th>البريد الإلكتروني</th>
+                    <th>الحالة</th>
+                    <th>الدور</th>
+                    <th>إجراءات</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- سيتم ملء هذا الجدول بالبيانات من الـ backend -->
+                <tr>
+                    <td>1</td>
+                    <td>admin</td>
+                    <td>admin@example.com</td>
+                    <td><span class="badge bg-success">نشط</span></td>
+                    <td><span class="badge bg-primary">مدير</span></td>
+                    <td><button class="btn btn-sm btn-info">تعديل</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

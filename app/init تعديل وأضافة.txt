@@ -1,0 +1,38 @@
+# ... (الكود السابق) ...
+
+def create_app(config_class=Config):
+    # ... (الكود السابق) ...
+    
+    # تسجيل Blueprints (المسارات)
+    from app.api.auth import bp as auth_bp
+    app.register_blueprint(auth_bp, url_prefix='/auth')
+
+    from app.main import bp as main_bp
+    app.register_blueprint(main_bp)
+
+    # --- تسجيل كل الـ Blueprints الجديدة ---
+    from app.api.users import bp as users_api_bp
+    app.register_blueprint(users_api_bp)
+    
+    from app.api.content import bp as content_api_bp
+    app.register_blueprint(content_api_bp)
+    
+    from app.api.analysis import bp as analysis_api_bp
+    app.register_blueprint(analysis_api_bp)
+
+    from app.api.media import bp as media_api_bp
+    app.register_blueprint(media_api_bp)
+
+    from app.api.strategy import bp as strategy_api_bp
+    app.register_blueprint(strategy_api_bp)
+
+    from app.api.automation import bp as automation_api_bp
+    app.register_blueprint(automation_api_bp)
+
+    from app.api.integrations import bp as integrations_api_bp
+    app.register_blueprint(integrations_api_bp)
+
+    from app.api.ecommerce import bp as ecommerce_api_bp
+    app.register_blueprint(ecommerce_api_bp)
+    
+    # ... (باقي الكود) ...

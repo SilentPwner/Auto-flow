@@ -1,0 +1,137 @@
+{% extends "layouts/base.html" %}
+
+{% block content %}
+<h1 class="mt-4 mb-4">{{ title }}</h1>
+<div class="card">
+    <div class="card-header">
+        اختر قالبًا وابدأ في الإبداع
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <!-- Left side: Form -->
+            <div class="col-md-5">
+                <form id="content-form">
+                    <div class="mb-3">
+                        <label for="template-type" class="form-label">اختر نوع القالب</label>
+                        <select class="form-select" id="template-type">
+                            <option value="product_description">وصف منتج</option>
+                            <option value="instagram_post">منشور إنستغرام</option>
+                        </select>
+                    </div>
+
+                    <!-- Product Description Fields -->
+                    <div id="product_description_fields">
+                        <div class="mb-3">
+                            <label for="product_name" class="form-label">اسم المنتج</label>
+                            <input type="text" class="form-control" id="product_name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="product_features" class="form-label">أهم الميزات (افصل بينها بفاصلة)</label>
+                            <textarea class="form-control" id="product_features" rows="3" required></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Instagram Post Fields (Initially hidden) -->
+                    <div id="instagram_post_fields" style="display: none;">
+                        <div class="mb-3">
+                            <label for="post_topic" class="form-label">موضوع المنشور</label>
+                            <input type="text" class="form-control" id="post_topic" required>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary w-100">
+                        <span id="generate-btn-text">توليد المحتوى</span>
+                        <div id="loading-spinner" class="spinner-border spinner-border-sm" role="status" style="display: none;">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                    </button>
+                </form>
+            </div>
+            
+            <!-- Right side: Result -->
+            <div class="col-md-7">
+                <div class="card bg-light h-100">
+                    <div class="card-header">
+                        النتيجة
+                    </div>
+                    <div class="card-body">
+                        <pre id="generated-result" class="text-wrap" style="white-space: pre-wrap;"></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% block scripts %}
+<script>
+// Logic to show/hide form fields based on template selection
+document.getElementById('template-type').addEventListener('change', function () {
+    const productFields = document.getElementById('product_description_fields');
+    const instagramFields = document.getElementById('instagram_post_fields');
+    if (this.value === 'product_description') {
+        productFields.style.display = 'block';
+        instagramFields.style.display = 'none';
+    } else if (this.value === 'instagram_post') {
+        productFields.style.display = 'none';
+        instagramFields.style.display = 'block';
+    }
+});
+
+// Form submission logic with Fetch API
+document.getElementById('content-form').addEventListener('submit', async function (e) {
+    e.preventDefault();
+    
+    const generateBtn = document.getElementById('generate-btn-text');
+    const spinner = document.getElementById('loading-spinner');
+    const resultBox = document.getElementById('generated-result');
+    
+    generateBtn.style.display = 'none';
+    spinner.style.display = 'inline-block';
+    resultBox.textContent = 'جاري التوليد، الرجاء الانتظار...';
+
+    const templateType = document.getElementById('template-type').value;
+    let context = {};
+
+    if (templateType === 'product_description') {
+        context = {
+            product_name: document.getElementById('product_name').value,
+            features: document.getElementById('product_features').value,
+            tone: 'persuasive' // Can be a dropdown later
+        };
+    } else if (templateType === 'instagram_post') {
+        context = {
+            topic: document.getElementById('post_topic').value,
+            vibe: 'engaging'
+        };
+    }
+    
+    try {
+        const response = await fetch('/api/content/generate-template-content', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                template_type: templateType,
+                context: context
+            })
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.error || 'An unknown error occurred.');
+        }
+
+        const data = await response.json();
+        resultBox.textContent = data.generated_text;
+        
+    } catch (error) {
+        resultBox.textContent = 'حدث خطأ: ' + error.message;
+    } finally {
+        generateBtn.style.display = 'inline-block';
+        spinner.style.display = 'none';
+    }
+});
+</script>
+{% endblock %}
