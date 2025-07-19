@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="utf-g">
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% if title %}{{ title }} - {% endif %}AutoFlow Pro</title>
     
@@ -14,7 +14,6 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     
-    <!-- Extra head block for page-specific styles -->
     {% block head_extra %}{% endblock %}
 </head>
 <body class="sb-sidenav-toggled">
@@ -38,7 +37,10 @@
                 <div class="container-fluid">
                     <button class="btn btn-primary" id="sidebarToggle"><i class="bi bi-list"></i></button>
                     <ul class="navbar-nav ms-auto mt-2 mt-lg-0">
+
+                        <!-- *** START OF CORRECTION *** -->
                         {% if current_user.is_authenticated %}
+                        <!-- إذا كان المستخدم مسجلاً دخوله، اعرض القائمة المنسدلة -->
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="bi bi-person-fill me-1"></i> {{ current_user.username }}
@@ -51,10 +53,16 @@
                             </div>
                         </li>
                         {% else %}
+                        <!-- إذا لم يكن مسجلاً دخوله، اعرض رابط تسجيل الدخول -->
                         <li class="nav-item">
                             <a class="nav-link" href="{{ url_for('auth.login') }}">تسجيل الدخول</a>
                         </li>
+                        <li class="nav-item">
+                             <a class="nav-link" href="{{ url_for('auth.register') }}">تسجيل حساب</a>
+                        </li>
                         {% endif %}
+                        <!-- *** END OF CORRECTION *** -->
+
                     </ul>
                 </div>
             </nav>
@@ -76,13 +84,9 @@
         </div>
     </div>
     
-    <!-- Bootstrap JS Bundle with Popper from CDN -->
+    <!-- JS and other scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    
-    <!-- Custom JS -->
     <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
-    
-    <!-- Extra scripts block for page-specific JavaScript -->
     {% block scripts %}{% endblock %}
 </body>
 </html>
